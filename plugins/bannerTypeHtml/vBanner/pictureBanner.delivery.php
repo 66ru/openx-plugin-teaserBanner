@@ -25,7 +25,7 @@ function Plugin_BannerTypeHTML_vBanner_pictureBanner_delivery_adRender(&$aBanner
 	    }
         $bannerText.= "<a href='$url' target='$target' style='float:$pictPos' class='imageAnchor'><img border='0' src='$imagePath' $imageStyle /></a>";
     }
-	$bannerText.= "<a href='$url' target='$target' style='float:$pictPos' class='textAnchor'>{$aBanner['bannertext']}</a>";
+	$bannerText.= "<a href='$url' target='$target' class='textAnchor'>{$aBanner['bannertext']}</a>";
 
     $bannerText = "<div style='width:{$aBanner['width']}px; height:{$aBanner['height']}px' class='vBanner'>$bannerText</div>";
 	return $prepend . $bannerText . $append;
