@@ -28,7 +28,9 @@ function Plugin_BannerTypeHTML_vBanner_pictureBanner_delivery_adRender(&$aBanner
 	$bannerText.= "<a href='$url' target='$target' class='textAnchor'>{$aBanner['bannertext']}</a>";
 
     $bannerText = "<div style='width:{$aBanner['width']}px; height:{$aBanner['height']}px' class='vBanner'>$bannerText</div>";
-	return $prepend . $bannerText . $append;
+	$conf = $GLOBALS['_MAX']['CONF'];
+	$beaconTag = ($logView && $conf['logging']['adImpressions']) ? _adRenderImageBeacon($aBanner, $zoneId, $source, $loc, $referer) : '';
+	return $prepend . $bannerText . $beaconTag . $append;
 }
 
 ?>
