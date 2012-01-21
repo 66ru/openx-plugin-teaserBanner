@@ -12,9 +12,18 @@ function Plugin_BannerTypeHTML_vBanner_pictureBanner_delivery_adRender(&$aBanner
 
 	$clickUrl = _adRenderBuildClickUrl($aBanner, $zoneId, $source, $ct0, $logClick);
 	$target = !empty($aBanner['target']) ? $aBanner['target'] : '_blank';
-	$bannerText.= "<a href='$clickUrl' target='$target' class='textAnchor'>{$aBanner['bannertext']}</a>";
 
-    $bannerText = "<div style='width:{$aBanner['width']}px; height:{$aBanner['height']}px' class='vBanner'>$bannerText</div>";
+	$pictPos = $aBanner['pict_pos'];
+	if (!in_array($pictPos, array('left','right'))) {
+		$pictPos = 'left';
+	}
+
+	if ($pictPos == 'left') {
+		$bannerText = "<td class='mediaTd'>$bannerText</td><td class='textTd' style='width:100%'><a href='$clickUrl' target='$target' class='textAnchor'>{$aBanner['bannertext']}</a></td>";
+	} else {
+		$bannerText = "<td class='textTd' style='width:100%'><a href='$clickUrl' target='$target' class='textAnchor'>{$aBanner['bannertext']}</a></td><td class='mediaTd'>$bannerText</td>";
+	}
+    $bannerText = "<table style='width:{$aBanner['width']}px; height:{$aBanner['height']}px' class='vBanner'><tr>$bannerText</tr></div>";
 	return $prepend . $bannerText . $append;
 }
 
@@ -23,10 +32,6 @@ function Plugin_BannerTypeHTML_vBanner_pictureBanner_delivery_adRenderImage(&$aB
 	if (isset($aBanner['parameters'])) {
 		$vastVariables = unserialize($aBanner['parameters']);
 		$aBanner = array_merge($aBanner, $vastVariables);
-	}
-	$pictPos = $aBanner['pict_pos'];
-	if (!in_array($pictPos, array('left','right'))) {
-		$pictPos = 'left';
 	}
 
 	$conf = $GLOBALS['_MAX']['CONF'];
@@ -46,7 +51,7 @@ function Plugin_BannerTypeHTML_vBanner_pictureBanner_delivery_adRenderImage(&$aB
 		if ($aBanner['image_width'] && $aBanner['image_height']) {
 			$imageStyle = "style='width:{$aBanner['image_width']}px; height:{$aBanner['image_height']}px'";
 		}
-		$bannerText.= "<a href='$clickUrl' target='$target' style='float:$pictPos' class='imageAnchor'><img border='0' alt='$alt' title='$alt' src='$imageUrl' $imageStyle /></a>";
+		$bannerText.= "<a href='$clickUrl' target='$target' class='imageAnchor'><img border='0' alt='$alt' title='$alt' src='$imageUrl' $imageStyle /></a>";
 	}
 
 	$beaconTag = ($logView && $conf['logging']['adImpressions']) ? _adRenderImageBeacon($aBanner, $zoneId, $source, $loc, $referer) : '';
@@ -58,10 +63,6 @@ function Plugin_BannerTypeHTML_vBanner_pictureBanner_delivery_adRenderFlash(&$aB
 	if (isset($aBanner['parameters'])) {
 		$vastVariables = unserialize($aBanner['parameters']);
 		$aBanner = array_merge($aBanner, $vastVariables);
-	}
-	$pictPos = $aBanner['pict_pos'];
-	if (!in_array($pictPos, array('left','right'))) {
-		$pictPos = 'left';
 	}
 
 	$conf = $GLOBALS['_MAX']['CONF'];
@@ -107,7 +108,7 @@ function Plugin_BannerTypeHTML_vBanner_pictureBanner_delivery_adRenderFlash(&$aB
 	$swfId = (!empty($aBanner['alt']) ? $aBanner['alt'] : 'Advertisement');
 
 	$code = "
-<div id='ox_$rnd' style='display:inline;float:$pictPos'>$altImageAdCode</div>
+<div id='ox_$rnd'>$altImageAdCode</div>
 <script type='text/javascript'><!--/"."/ <![CDATA[
     var ox_swf = new FlashObject('{$fileUrl}', '{$swfId}', '{$width}', '{$height}', '{$pluginVersion}');\n";
 	foreach ($swfParams as $key => $value) {
