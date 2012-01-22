@@ -23,7 +23,7 @@ function Plugin_BannerTypeHTML_vBanner_pictureBanner_delivery_adRender(&$aBanner
 	} else {
 		$bannerText = "<td class='textTd' style='width:100%'><a href='$clickUrl' target='$target' class='textAnchor'>{$aBanner['bannertext']}</a></td><td class='mediaTd'>$bannerText</td>";
 	}
-    $bannerText = "<table style='width:{$aBanner['width']}px; height:{$aBanner['height']}px' class='vBanner'><tr>$bannerText</tr></div>";
+    $bannerText = "<table style='width:{$aBanner['width']}px; height:{$aBanner['height']}px' class='vBanner'><tr>$bannerText</tr></table>";
 	return $prepend . $bannerText . $append;
 }
 
